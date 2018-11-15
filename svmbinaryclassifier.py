@@ -1,0 +1,69 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+from sklearn import svm
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+def get_data(filename):
+    data = pd.read_csv(filename, delimiter=",", header=0)
+    return data
+
+def standardize_data(data):
+    scaler = preprocessing.StandardScaler()
+    np_scaled = scaler.fit_transform(data)
+    return np_scaled
+
+def make_y_binary(yvals):
+    yvals = np.where(yvals < 3, 1, -1)
+    return yvals
+
+def split_data(data):
+    y = data.iloc[0:, -1] #labels
+    X = data.iloc[0:, :-1] #features
+    # X = standardize_data(X)
+
+    # split 70% of data
+    xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
+    return xTrain, xTest, yTrain.values, yTest.values
+
+def get_log_error(Xtrain, Xtest, ytrain, ytest):
+    classifier = LogisticRegression()
+    classifier.fit(Xtrain, ytrain)
+
+    pred_train = classifier.predict(Xtrain)
+    pred_test = classifier.predict(Xtest)
+    # print (len(np.where(np.equal(y_pred, y_test))[0])/len(y_test))
+    # print (np.sum(y_pred==y_test)/len(y_test))
+
+    ein = np.sum(pred_train != ytest)/len(ytest)
+    eout = np.sum(pred_test != ytest)/len(ytest)
+    return ein, eout
+
+def error_table(bin_in, bin_out, multi_in, multi_out):
+    titles = ['Ein', 'Eout']
+    binary = pd.Series([bin_in*100, bin_out*100], index=titles)
+    multi = pd.Series([multi_in*100, multi_out*100], index=titles)
+    d = {'Binary class' : binary, 'Multi-class' : multi}
+    return pd.DataFrame(d)
+
+fulldata = get_data("yelpdata.csv")
+smalldata = fulldata[:100]
+xTrain, xTest, yTrain, yTest = split_data(smalldata)
+
+yTrain_bin = make_y_binary(yTrain)
+yTest_bin = make_y_binary(yTest)
+
+bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
+
+print ("binary Ein: %.2f" % (bin_train_error*100))
+print ("binary Eout: %.2f" % (bin_test_error*100))
+
+multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
+
+print ("multi Ein: %.2f" % (multi_train_error*100))
+print ("multi Eout: %.2f" % (multi_test_error*100))
+
+pd.options.display.float_format = '{:.2f}%'.format
+print (error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
