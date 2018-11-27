@@ -26,10 +26,3 @@ def split_data(data):
     # split 70% of data
     xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
     return xTrain, xTest, yTrain.values, yTest.values
-
-def error_table(bin_in, bin_out, multi_in, multi_out):
-    titles = ['Ein', 'Eout']
-    binary = pd.Series([bin_in*100, bin_out*100], index=titles)
-    multi = pd.Series([multi_in*100, multi_out*100], index=titles)
-    d = {'Binary class' : binary, 'Multi-class' : multi}
-    return pd.DataFrame(d)
