@@ -37,7 +37,7 @@ def get_log_error(Xtrain, Xtest, ytrain, ytest):
     # print (len(np.where(np.equal(y_pred, y_test))[0])/len(y_test))
     # print (np.sum(y_pred==y_test)/len(y_test))
 
-    ein = np.sum(pred_train != ytest)/len(ytest)
+    ein = np.sum(pred_train != ytrain)/len(ytrain)
     eout = np.sum(pred_test != ytest)/len(ytest)
     return ein, eout
 
@@ -57,13 +57,13 @@ yTest_bin = make_y_binary(yTest)
 
 bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
 
-print ("binary Ein: %.2f" % (bin_train_error*100))
-print ("binary Eout: %.2f" % (bin_test_error*100))
+# print ("binary Ein: %.2f" % (bin_train_error*100))
+# print ("binary Eout: %.2f" % (bin_test_error*100))
 
 multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
 
-print ("multi Ein: %.2f" % (multi_train_error*100))
-print ("multi Eout: %.2f" % (multi_test_error*100))
+# print ("multi Ein: %.2f" % (multi_train_error*100))
+# print ("multi Eout: %.2f" % (multi_test_error*100))
 
 pd.options.display.float_format = '{:.2f}%'.format
 print (error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
