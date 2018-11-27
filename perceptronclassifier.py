@@ -5,10 +5,13 @@ import numpy as np
 import getdata as data  # getdata.py file
 
 from sklearn import svm
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import Perceptron
 
-def get_log_error(Xtrain, Xtest, ytrain, ytest):
-    classifier = LogisticRegression()
+import warnings
+warnings.filterwarnings("ignore") # suppress warnings
+
+def get_per_error(Xtrain, Xtest, ytrain, ytest):
+    classifier = Perceptron()
     classifier.fit(Xtrain, ytrain)
 
     pred_train = classifier.predict(Xtrain)
@@ -21,16 +24,16 @@ def get_log_error(Xtrain, Xtest, ytrain, ytest):
     return ein, eout
 
 fulldata = data.get_data("yelpdata.csv")
-# smalldata = fulldata[:100]
-# xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
-xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
+smalldata = fulldata[:100]
+xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
+# xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
 yTrain_bin = data.make_y_binary(yTrain)
 yTest_bin = data.make_y_binary(yTest)
 
-bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
+bin_train_error, bin_test_error = get_per_error(xTrain, xTest, yTrain_bin, yTest_bin)
 
-multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
+multi_train_error, multi_test_error = get_per_error(xTrain, xTest, yTrain, yTest)
 
 pd.options.display.float_format = '{:.2f}%'.format
 print (data.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))

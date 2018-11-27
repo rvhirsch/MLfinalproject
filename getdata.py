@@ -13,6 +13,10 @@ def standardize_data(data):
     np_scaled = scaler.fit_transform(data)
     return np_scaled
 
+def make_y_binary(yvals):
+    yvals = np.where(yvals < 3, 1, -1)
+    return yvals
+
 def split_data(data):
     y = data.iloc[0:, -1] #labels
     X = data.iloc[0:, :-1] #features
@@ -21,3 +25,10 @@ def split_data(data):
     # split 70% of data
     xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
     return xTrain, xTest, yTrain.values, yTest.values
+
+def error_table(bin_in, bin_out, multi_in, multi_out):
+    titles = ['Ein', 'Eout']
+    binary = pd.Series([bin_in*100, bin_out*100], index=titles)
+    multi = pd.Series([multi_in*100, multi_out*100], index=titles)
+    d = {'Binary class' : binary, 'Multi-class' : multi}
+    return pd.DataFrame(d)
