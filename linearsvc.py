@@ -19,8 +19,8 @@ if __name__ == "__main__":
     yTrain_bin = data.make_y_binary(yTrain)
     yTest_bin = data.make_y_binary(yTest)
 
-    bin_train_error, bin_test_error = error.get_log_error_bin(xTrain, xTest, yTrain_bin, yTest_bin, svm.LinearSVC())
-    multi_train_error, multi_test_error = error.get_log_error_multi(xTrain, xTest, yTrain, yTest, svm.LinearSVC())
+    bin_train_error, bin_test_error = error.get_error_bin(xTrain, xTest, yTrain_bin, yTest_bin, svm.LinearSVC())
+    multi_train_error, multi_test_error = error.get_error_multi(xTrain, xTest, yTrain, yTest, svm.LinearSVC())
 
     pd.options.display.float_format = '{:.2f}%'.format
     print (error.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))

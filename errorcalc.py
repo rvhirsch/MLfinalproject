@@ -24,7 +24,7 @@ def off_by_one_err(pred_train, ytrain, pred_test, ytest): # only for multiclass
     return ein, eout
 
 
-def get_log_error_bin(Xtrain, Xtest, ytrain, ytest, classifier):
+def get_error_bin(Xtrain, Xtest, ytrain, ytest, classifier):
     classifier.fit(Xtrain, ytrain)
 
     pred_train = classifier.predict(Xtrain)
@@ -32,7 +32,7 @@ def get_log_error_bin(Xtrain, Xtest, ytrain, ytest, classifier):
 
     return equal_error(pred_train, ytrain, pred_test, ytest)
 
-def get_log_error_multi(Xtrain, Xtest, ytrain, ytest, classifier):
+def get_error_multi(Xtrain, Xtest, ytrain, ytest, classifier):
     classifier.fit(Xtrain, ytrain)
 
     pred_train = classifier.predict(Xtrain)
