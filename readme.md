@@ -21,5 +21,5 @@ Each row:
 9. stars = star rating given
 
 ## Current Classifiers
-1. svmbinaryclassifier.py : Logistic Regression Classifier
+1. logisticregression.py : Logistic Regression Classifier
 2. perceptronclassifier.py : Perceptron Classifier
