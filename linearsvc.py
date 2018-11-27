@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore") # suppress warnings
 
 def get_svc_error(Xtrain, Xtest, ytrain, ytest):
-    classifier = svm.SVC(kernel='rbf')
+    classifier = svm.LinearSVC()
     classifier.fit(Xtrain, ytrain)
 
     pred_train = classifier.predict(Xtrain)
@@ -30,8 +30,6 @@ if __name__ == "__main__":
 
     yTrain_bin = data.make_y_binary(yTrain)
     yTest_bin = data.make_y_binary(yTest)
-
-    print ("got data")
 
     bin_train_error, bin_test_error = get_svc_error(xTrain, xTest, yTrain_bin, yTest_bin)
     print ("here now")
