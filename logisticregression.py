@@ -19,7 +19,8 @@ if __name__ == "__main__":
     yTest_bin = data.make_y_binary(yTest)
 
     bin_train_error, bin_test_error = error.get_error_bin(xTrain, xTest, yTrain_bin, yTest_bin, LogisticRegression())
+    multi_train_error_eq, multi_test_error_eq = error.get_error_bin(xTrain, xTest, yTrain, yTest, LogisticRegression())
     multi_train_error, multi_test_error = error.get_error_multi(xTrain, xTest, yTrain, yTest, LogisticRegression())
 
     pd.options.display.float_format = '{:.2f}%'.format
-    print (error.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
+    print (error.error_table(bin_train_error, bin_test_error, multi_train_error_eq, multi_test_error_eq, multi_train_error, multi_test_error))
