@@ -9,8 +9,9 @@ def get_data(filename):
     return data
 
 def standardize_data(data):
-    scaler = preprocessing.StandardScaler()
-    np_scaled = scaler.fit_transform(data)
+    # scaler = preprocessing.StandardScaler()
+    # np_scaled = scaler.fit_transform(data)
+    np_scaled = preprocessing.scale(data)
     return np_scaled
 
 def make_y_binary(yvals):
