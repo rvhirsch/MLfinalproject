@@ -24,9 +24,9 @@ def get_per_error(Xtrain, Xtest, ytrain, ytest):
     return ein, eout
 
 fulldata = data.get_data("yelpdata.csv")
-smalldata = fulldata[:100]
-xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
-# xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
+# smalldata = fulldata[:100]
+# xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
+xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
 yTrain_bin = data.make_y_binary(yTrain)
 yTest_bin = data.make_y_binary(yTest)
