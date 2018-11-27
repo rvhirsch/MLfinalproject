@@ -19,3 +19,7 @@ Each row:
 7. numwords = number of total words in review
 8. numsentences = number of sentences in review
 9. stars = star rating given
+
+## Current Classifiers
+1. svmbinaryclassifier.py : Logistic Regression Classifier
+2. perceptronclassifier.py : Perceptron Classifier
