@@ -2,31 +2,33 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
+import getdata as data
+
 from sklearn import svm
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 
-def get_data(filename):
-    data = pd.read_csv(filename, delimiter=",", header=0)
-    return data
-
-def standardize_data(data):
-    scaler = preprocessing.StandardScaler()
-    np_scaled = scaler.fit_transform(data)
-    return np_scaled
-
+# def get_data(filename):
+#     data = pd.read_csv(filename, delimiter=",", header=0)
+#     return data
+#
+# def standardize_data(data):
+#     scaler = preprocessing.StandardScaler()
+#     np_scaled = scaler.fit_transform(data)
+#     return np_scaled
+#
 def make_y_binary(yvals):
     yvals = np.where(yvals < 3, 1, -1)
     return yvals
 
-def split_data(data):
-    y = data.iloc[0:, -1] #labels
-    X = data.iloc[0:, :-1] #features
-    # X = standardize_data(X)
-
-    # split 70% of data
-    xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
-    return xTrain, xTest, yTrain.values, yTest.values
+# def split_data(data):
+#     y = data.iloc[0:, -1] #labels
+#     X = data.iloc[0:, :-1] #features
+#     # X = standardize_data(X)
+#
+#     # split 70% of data
+#     xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
+#     return xTrain, xTest, yTrain.values, yTest.values
 
 def get_log_error(Xtrain, Xtest, ytrain, ytest):
     classifier = LogisticRegression()
@@ -48,9 +50,10 @@ def error_table(bin_in, bin_out, multi_in, multi_out):
     d = {'Binary class' : binary, 'Multi-class' : multi}
     return pd.DataFrame(d)
 
-fulldata = get_data("yelpdata.csv")
-smalldata = fulldata[:100]
-xTrain, xTest, yTrain, yTest = split_data(smalldata)
+fulldata = data.get_data("yelpdata.csv")
+# smalldata = fulldata[:100]
+# xTrain, xTest, yTrain, yTest = split_data(smalldata)
+xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
 yTrain_bin = make_y_binary(yTrain)
 yTest_bin = make_y_binary(yTest)
