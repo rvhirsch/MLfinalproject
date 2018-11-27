@@ -32,7 +32,6 @@ if __name__ == "__main__":
     yTest_bin = data.make_y_binary(yTest)
 
     bin_train_error, bin_test_error = get_svc_error(xTrain, xTest, yTrain_bin, yTest_bin)
-    print ("here now")
     multi_train_error, multi_test_error = get_svc_error(xTrain, xTest, yTrain, yTest)
 
     pd.options.display.float_format = '{:.2f}%'.format

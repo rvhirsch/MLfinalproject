@@ -5,6 +5,7 @@ import numpy as np
 import logisticregression as logreg
 import perceptronclassifier as percep
 import getdata as data
+import linearsvc as svc
 
 fulldata = data.get_data("yelpdata.csv")
 # smalldata = fulldata[:100]
@@ -24,6 +25,13 @@ print (data.error_table(bin_train_error, bin_test_error, multi_train_error, mult
 print ("Perceptron Error:")
 bin_train_error, bin_test_error = percep.get_per_error(xTrain, xTest, yTrain_bin, yTest_bin)
 multi_train_error, multi_test_error = percep.get_per_error(xTrain, xTest, yTrain, yTest)
+
+pd.options.display.float_format = '{:.2f}%'.format
+print (data.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
+
+print ("Linear SVC Error:")
+bin_train_error, bin_test_error = svc.get_svc_error(xTrain, xTest, yTrain_bin, yTest_bin)
+multi_train_error, multi_test_error = svc.get_svc_error(xTrain, xTest, yTrain, yTest)
 
 pd.options.display.float_format = '{:.2f}%'.format
 print (data.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
