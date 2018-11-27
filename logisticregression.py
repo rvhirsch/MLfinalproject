@@ -20,17 +20,19 @@ def get_log_error(Xtrain, Xtest, ytrain, ytest):
     eout = np.sum(pred_test != ytest)/len(ytest)
     return ein, eout
 
-fulldata = data.get_data("yelpdata.csv")
-# smalldata = fulldata[:100]
-# xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
-xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
+if __name__ == "__main__":
 
-yTrain_bin = data.make_y_binary(yTrain)
-yTest_bin = data.make_y_binary(yTest)
+    fulldata = data.get_data("yelpdata.csv")
+    # smalldata = fulldata[:100]
+    # xTrain, xTest, yTrain, yTest = data.split_data(smalldata)
+    xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
-bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
+    yTrain_bin = data.make_y_binary(yTrain)
+    yTest_bin = data.make_y_binary(yTest)
 
-multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
+    bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
 
-pd.options.display.float_format = '{:.2f}%'.format
-print (data.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
+    multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
+
+    pd.options.display.float_format = '{:.2f}%'.format
+    print (data.error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
