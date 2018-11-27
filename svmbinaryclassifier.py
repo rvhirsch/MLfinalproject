@@ -2,33 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-import getdata as data
+import getdata as data  # getdata.py file
 
 from sklearn import svm
 from sklearn.linear_model import LogisticRegression
-# from sklearn.model_selection import train_test_split
 
-# def get_data(filename):
-#     data = pd.read_csv(filename, delimiter=",", header=0)
-#     return data
-#
-# def standardize_data(data):
-#     scaler = preprocessing.StandardScaler()
-#     np_scaled = scaler.fit_transform(data)
-#     return np_scaled
-#
 def make_y_binary(yvals):
     yvals = np.where(yvals < 3, 1, -1)
     return yvals
-
-# def split_data(data):
-#     y = data.iloc[0:, -1] #labels
-#     X = data.iloc[0:, :-1] #features
-#     # X = standardize_data(X)
-#
-#     # split 70% of data
-#     xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.3, shuffle=True)
-#     return xTrain, xTest, yTrain.values, yTest.values
 
 def get_log_error(Xtrain, Xtest, ytrain, ytest):
     classifier = LogisticRegression()
@@ -60,13 +41,7 @@ yTest_bin = make_y_binary(yTest)
 
 bin_train_error, bin_test_error = get_log_error(xTrain, xTest, yTrain_bin, yTest_bin)
 
-# print ("binary Ein: %.2f" % (bin_train_error*100))
-# print ("binary Eout: %.2f" % (bin_test_error*100))
-
 multi_train_error, multi_test_error = get_log_error(xTrain, xTest, yTrain, yTest)
-
-# print ("multi Ein: %.2f" % (multi_train_error*100))
-# print ("multi Eout: %.2f" % (multi_test_error*100))
 
 pd.options.display.float_format = '{:.2f}%'.format
 print (error_table(bin_train_error, bin_test_error, multi_train_error, multi_test_error))
