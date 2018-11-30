@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
-    # leaves = [10, 30, 50, 100]
-    # for leaf in leaves:
-    #     print ("leaf:", leaf)
-    error.compute_errors(xTrain, xTest, yTrain, yTest, KNeighborsClassifier(leaf_size=5))
+    leaves = [2, 5, 10, 15, 20]
+    for leaf in leaves:
+        print ("leaf:", leaf)
+        error.compute_errors(xTrain, xTest, yTrain, yTest, KNeighborsClassifier(n_neighbors=leaf))

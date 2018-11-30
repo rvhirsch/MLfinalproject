@@ -37,10 +37,10 @@ print ("MLP Error:")
 error.compute_errors(xTrain, xTest, yTrain, yTest, MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(5,5)))
 
 print ("Random Forest Error:")
-error.compute_errors(xTrain, xTest, yTrain, yTest, RandomForestClassifier(max_leaf_nodes=leaf))
+error.compute_errors(xTrain, xTest, yTrain, yTest, RandomForestClassifier(max_leaf_nodes=7500))
 
 print ("K Neighbors Error:")
-error.compute_errors(xTrain, xTest, yTrain, yTest, KNeighborsClassifier(leaf_size=5))
+error.compute_errors(xTrain, xTest, yTrain, yTest, KNeighborsClassifier(leaf_size=5, n_neighbors=15))
 
 print ("K Means Error:")
 error.compute_errors(xTrain, xTest, yTrain, yTest, KMeans(n_clusters=5))
