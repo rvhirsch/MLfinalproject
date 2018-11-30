@@ -6,7 +6,7 @@ import getdata as data  # getdata.py file
 import errorcalc as error
 
 from sklearn import svm
-from sklearn.linear_model import Perceptron
+from sklearn.ensemble import RandomForestClassifier
 
 import warnings
 warnings.filterwarnings("ignore") # suppress warnings
@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
-    iters = [10, 20, 50, 100, 200, 300]
-    for i in iters:
-        print ("i:", i)
-        error.compute_errors(xTrain, xTest, yTrain, yTest, Perceptron(max_iter=i))
+    max_leaf_nodes = [6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000]
+    for leaf in max_leaf_nodes:
+        print ("leaf:", leaf)
+        error.compute_errors(xTrain, xTest, yTrain, yTest, RandomForestClassifier(max_leaf_nodes=leaf))
