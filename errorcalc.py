@@ -3,6 +3,9 @@ import numpy as np
 
 import getdata as data
 
+# from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+
 def compute_errors(xTrain, xTest, yTrain, yTest, classifier):
     yTrain_bin = data.make_y_binary(yTrain)
     yTest_bin = data.make_y_binary(yTest)
@@ -15,6 +18,8 @@ def compute_errors(xTrain, xTest, yTrain, yTest, classifier):
     print (error_table(bin_train_error, bin_test_error,
                         multi_train_error_eq, multi_test_error_eq,
                         multi_train_error, multi_test_error))
+
+    return bin_train_error, bin_test_error, multi_train_error_eq, multi_test_error_eq, multi_train_error, multi_test_error
 
 def error_table(bin_in, bin_out, multi_in_eq, multi_out_eq, multi_in_one_off, multi_out_one_off):
     titles = ['Ein', 'Eout']
@@ -55,3 +60,43 @@ def get_error_multi(Xtrain, Xtest, ytrain, ytest, classifier):
     pred_test = classifier.predict(Xtest)
 
     return off_by_one_err(pred_train, ytrain, pred_test, ytest)
+
+def kfolds_error(xTrain, yTrain, xTest, yTest, classifier):
+    insample_scores = cross_val_score(classifier, xTrain, yTrain, cv=5)
+    print (insample_scores, "avg:", np.mean(insample_scores))
+
+    outsample_scores = cross_val_score(classifier, xTest, yTest, cv=5)
+    print (outsample_scores, "avg:", np.mean(outsample_scores))
+
+    return insample_scores, outsample_scores
+
+    # kf = KFold(n_splits=5)
+    # bintrain = []
+    # bintest = []
+    # multitraineq = []
+    # multitesteq = []
+    # multitrain = []
+    # multitest = []
+
+    # for train_index, test_index in kf.split(X):
+    #     xTrain, xTest = X[train_index], X[test_index]
+    #     yTrain, yTest = y[train_index], y[test_index]
+    #
+    #     bin_train_error, bin_test_error, multi_train_error_eq, multi_test_error_eq, multi_train_error, multi_test_error = compute_errors(xTrain, xTest, yTrain, yTest, classifier)
+    #
+    #     bintrain.append(bin_train_error)
+    #     bintest.append(bin_test_error)
+    #     multitraineq.append(multi_train_error_eq)
+    #     multitesteq.append(multi_test_error_eq)
+    #     multitrain.append(multi_train_error)
+    #     multitest.append(multi_test_error)
+    #
+    # # print ("average errors:")
+    # # print ("bintrain:", np.mean(bintrain))
+    # # print ("bintest:", np.mean(bintest))
+    # # print ("multitraineq:", np.mean(multitraineq))
+    # # print ("multitesteq:", np.mean(multitesteq))
+    # # print ("multitrain:", np.mean(multitrain))
+    # # print ("multitest:", np.mean(multitest))
+    #
+    # return np.mean(bintrain), np.mean(bintest), np.mean(multitraineq), np.mean(multitesteq), np.mean(multitrain), np.mean(multitest)

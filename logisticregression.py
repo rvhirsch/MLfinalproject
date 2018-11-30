@@ -16,4 +16,7 @@ if __name__ == "__main__":
 
     xTrain, xTest, yTrain, yTest = data.split_data(fulldata)
 
-    error.compute_errors(xTrain, xTest, yTrain, yTest, LogisticRegression())
+    Cvals = [0.01, 0.1, 1, 10, 100]
+    for c in Cvals:
+        print ("C:", c)
+        error.compute_errors(xTrain, xTest, yTrain, yTest, LogisticRegression(C=c, solver='lbfgs'))
