@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 import getdata as data
 
@@ -70,33 +71,15 @@ def kfolds_error(xTrain, yTrain, xTest, yTest, classifier):
 
     return insample_scores, outsample_scores
 
-    # kf = KFold(n_splits=5)
-    # bintrain = []
-    # bintest = []
-    # multitraineq = []
-    # multitesteq = []
-    # multitrain = []
-    # multitest = []
-
-    # for train_index, test_index in kf.split(X):
-    #     xTrain, xTest = X[train_index], X[test_index]
-    #     yTrain, yTest = y[train_index], y[test_index]
-    #
-    #     bin_train_error, bin_test_error, multi_train_error_eq, multi_test_error_eq, multi_train_error, multi_test_error = compute_errors(xTrain, xTest, yTrain, yTest, classifier)
-    #
-    #     bintrain.append(bin_train_error)
-    #     bintest.append(bin_test_error)
-    #     multitraineq.append(multi_train_error_eq)
-    #     multitesteq.append(multi_test_error_eq)
-    #     multitrain.append(multi_train_error)
-    #     multitest.append(multi_test_error)
-    #
-    # # print ("average errors:")
-    # # print ("bintrain:", np.mean(bintrain))
-    # # print ("bintest:", np.mean(bintest))
-    # # print ("multitraineq:", np.mean(multitraineq))
-    # # print ("multitesteq:", np.mean(multitesteq))
-    # # print ("multitrain:", np.mean(multitrain))
-    # # print ("multitest:", np.mean(multitest))
-    #
-    # return np.mean(bintrain), np.mean(bintest), np.mean(multitraineq), np.mean(multitesteq), np.mean(multitrain), np.mean(multitest)
+def graphCerrors(bintrain, bintest, multitraineq, multitesteq, multitrain, multitest, Cvals):
+    plt.plot(Cvals, bintrain, 'b', label="bintrain")
+    plt.plot(Cvals, bintest, 'g', label="bintest")
+    plt.plot(Cvals, multitraineq, 'r', label="multitraineq")
+    plt.plot(Cvals, multitesteq, 'c', label="multitesteq")
+    plt.plot(Cvals, multitrain, 'm', label="multitrain")
+    plt.plot(Cvals, multitest, 'y', label="multitest")
+    plt.ylabel("Error Values")
+    plt.xlabel("C Values")
+    plt.legend(loc='best')
+    plt.title("Error For Varying C Values")
+    plt.show()
